@@ -5,7 +5,7 @@ note: keep in mind that the rise intermediate codegen representation is internal
 note: all results here are before canonicalization, which e.g eleminates duplicate constants and moves them out of loops.
 
 ### reduce
-```C++
+```mlir
 func @reduce(%outArg:memref<1xf32>, %inArg:memref<1024xf32>) {
     %array0 = rise.in %inArg : !rise.array<1024, scalar<f32>>
 
@@ -30,7 +30,7 @@ func @reduce(%outArg:memref<1xf32>, %inArg:memref<1024xf32>) {
         V
 ```
 
-```
+```mlir
 func @reduce(%arg0: memref<1xf32>, %arg1: memref<1024xf32>) {
   %c0 = constant 0 : index
   %cst = constant 0.000000e+00 : f32
@@ -59,7 +59,7 @@ func @reduce(%arg0: memref<1xf32>, %arg1: memref<1024xf32>) {
         V
 ```
 
-```C++
+```mlir
   func @reduce(%arg0: memref<1xf32>, %arg1: memref<1024xf32>) {
     %c0 = constant 0 : index
     %cst = constant 0.000000e+00 : f32
@@ -78,7 +78,7 @@ func @reduce(%arg0: memref<1xf32>, %arg1: memref<1024xf32>) {
 ```
 
 ### map_add
-```C++
+```mlir
 func @map_add(%outArg: memref<4xf32>, %in: memref<4xf32>) {
     %array = rise.in %in : !rise.array<4, scalar<f32>>
     %doubleFun = rise.lambda (%summand : !rise.scalar<f32>) -> !rise.scalar<f32> {
@@ -102,7 +102,7 @@ func @map_add(%outArg: memref<4xf32>, %in: memref<4xf32>) {
         V
 ```
 
-```
+```mlir
 func @map_add(%arg0: memref<4xf32>, %arg1: memref<4xf32>) {
   %c0 = constant 0 : index
   %c0_0 = constant 0 : index
@@ -128,7 +128,7 @@ func @map_add(%arg0: memref<4xf32>, %arg1: memref<4xf32>) {
         V
 ```
 
-```C++
+```mlir
 func @map_add(%arg0: memref<4xf32>, %arg1: memref<4xf32>) {
    %c0 = constant 0 : index
    %c0_0 = constant 0 : index
@@ -145,7 +145,7 @@ func @map_add(%arg0: memref<4xf32>, %arg1: memref<4xf32>) {
 ```
 
 ### 4D_map_add
-```C++
+```mlir
 func @4D_map_add(%outArg:memref<4x4x4x4xf32>, %inArg:memref<4x4x4x4xf32>) {
     %array3D = rise.in %inArg : !rise.array<4, array<4, array<4, array<4, scalar<f32>>>>>
     %doubleFun = rise.lambda (%summand : !rise.scalar<f32>) -> !rise.scalar<f32> {
@@ -182,7 +182,7 @@ func @4D_map_add(%outArg:memref<4x4x4x4xf32>, %inArg:memref<4x4x4x4xf32>) {
         V
 ```
 
-```
+```mlir
 func @4D_map_add(%arg0: memref<4x4x4x4xf32>, %arg1: memref<4x4x4x4xf32>) {
   %c0 = constant 0 : index
   %c0_0 = constant 0 : index
@@ -232,7 +232,7 @@ func @4D_map_add(%arg0: memref<4x4x4x4xf32>, %arg1: memref<4x4x4x4xf32>) {
         V
 ```
 
-```C++
+```mlir
   func @4D_map_add(%arg0: memref<4x4x4x4xf32>, %arg1: memref<4x4x4x4xf32>) {
     %c0 = constant 0 : index
     %c0_0 = constant 0 : index
@@ -272,7 +272,7 @@ func @4D_map_add(%arg0: memref<4x4x4x4xf32>, %arg1: memref<4x4x4x4xf32>) {
         V
 ```
 
-```C++
+```mlir
   func @4D_map_add(%arg0: memref<4x4x4x4xf32>, %arg1: memref<4x4x4x4xf32>) {
     %c0 = constant 0 : index
     %c4 = constant 4 : index
@@ -294,7 +294,7 @@ func @4D_map_add(%arg0: memref<4x4x4x4xf32>, %arg1: memref<4x4x4x4xf32>) {
 ```
 
 ### fst (projection)
-```C++
+```mlir
 func @fst(%outArg:memref<4xf32>, %inArg0:memref<4xf32>, %inArg1:memref<4xf32>) {
     %array0 = rise.in %inArg0 : !rise.array<4, scalar<f32>>
     %array1 = rise.in %inArg1 : !rise.array<4, scalar<f32>>
@@ -322,7 +322,7 @@ func @fst(%outArg:memref<4xf32>, %inArg0:memref<4xf32>, %inArg1:memref<4xf32>) {
         V
 ```
 
-```
+```mlir
 func @fst(%arg0: memref<4xf32>, %arg1: memref<4xf32>, %arg2: memref<4xf32>) {
   %0 = "rise.codegen.zip"(%arg1, %arg2) : (memref<4xf32>, memref<4xf32>) -> memref<4xf32>
   %c0 = constant 0 : index
@@ -349,7 +349,7 @@ func @fst(%arg0: memref<4xf32>, %arg1: memref<4xf32>, %arg2: memref<4xf32>) {
         V
 ```
 
-```C++
+```mlir
   func @fst(%arg0: memref<4xf32>, %arg1: memref<4xf32>, %arg2: memref<4xf32>) {
     %c0 = constant 0 : index
     %c0_0 = constant 0 : index
@@ -364,7 +364,7 @@ func @fst(%arg0: memref<4xf32>, %arg1: memref<4xf32>, %arg2: memref<4xf32>) {
 ```
 
 ### vector addition
-```C++
+```mlir
 func @vec_add(%outArg:memref<4xf32>, %inArg0:memref<4xf32>, %inArg1:memref<4xf32>) {
     %array0 = rise.in %inArg0 : !rise.array<4, scalar<f32>>
     %array1 = rise.in %inArg1 : !rise.array<4, scalar<f32>>
@@ -399,7 +399,7 @@ func @vec_add(%outArg:memref<4xf32>, %inArg0:memref<4xf32>, %inArg1:memref<4xf32
         V
 ```
 
-```
+```mlir
 func @vec_add(%arg0: memref<4xf32>, %arg1: memref<4xf32>, %arg2: memref<4xf32>) {
   %0 = "rise.codegen.zip"(%arg1, %arg2) : (memref<4xf32>, memref<4xf32>) -> memref<4xf32>
   %c0 = constant 0 : index
@@ -428,7 +428,7 @@ func @vec_add(%arg0: memref<4xf32>, %arg1: memref<4xf32>, %arg2: memref<4xf32>) 
         V
 ```
 
-```C++
+```mlir
   func @vec_add(%arg0: memref<4xf32>, %arg1: memref<4xf32>, %arg2: memref<4xf32>) {
     %c0 = constant 0 : index
     %c0_0 = constant 0 : index
@@ -445,7 +445,7 @@ func @vec_add(%arg0: memref<4xf32>, %arg1: memref<4xf32>, %arg2: memref<4xf32>) 
 ```
 
 ### dot_fused
-```C++
+```mlir
 func @dot_fused(%outArg:memref<1xf32>, %inArg0:memref<1024xf32>, %inArg1:memref<1024xf32>)  {
     //Arrays
     %array0 = rise.in %inArg0 : !rise.array<1024, scalar<f32>>
@@ -488,7 +488,7 @@ func @dot_fused(%outArg:memref<1xf32>, %inArg0:memref<1024xf32>, %inArg1:memref<
         V
 ```
 
-```
+```mlir
 func @dot_fused(%arg0: memref<1xf32>, %arg1: memref<1024xf32>, %arg2: memref<1024xf32>) {
   %0 = "rise.codegen.zip"(%arg1, %arg2) : (memref<1024xf32>, memref<1024xf32>) -> memref<4xf32>
   %c0 = constant 0 : index
@@ -521,7 +521,7 @@ func @dot_fused(%arg0: memref<1xf32>, %arg1: memref<1024xf32>, %arg2: memref<102
         V
 ```
 
-```C++
+```mlir
   func @dot_fused(%arg0: memref<1xf32>, %arg1: memref<1024xf32>, %arg2: memref<1024xf32>) {
     %cst = constant 0.000000e+00 : f32
     %c0 = constant 0 : index
@@ -541,7 +541,7 @@ func @dot_fused(%arg0: memref<1xf32>, %arg1: memref<1024xf32>, %arg2: memref<102
 ```
 
 ### mm_fused
-```C++
+```mlir
 func @rise_fun(%outArg:memref<2048x2048xf32>, %inA:memref<2048x2048xf32>, %inB:memref<2048x2048xf32>) {
     %A = rise.in %inA : !rise.array<2048, array<2048, scalar<f32>>>
     %B = rise.in %inB : !rise.array<2048, array<2048, scalar<f32>>>
@@ -594,7 +594,7 @@ func @rise_fun(%outArg:memref<2048x2048xf32>, %inA:memref<2048x2048xf32>, %inB:m
         V
 ```
 
-```
+```mlir
 func @mm_fused(%arg0: memref<2048x2048xf32>, %arg1: memref<2048x2048xf32>, %arg2: memref<2048x2048xf32>) {
   %c0 = constant 0 : index
   %c0_0 = constant 0 : index
@@ -643,7 +643,7 @@ func @mm_fused(%arg0: memref<2048x2048xf32>, %arg1: memref<2048x2048xf32>, %arg2
         V
 ```
 
-```C++
+```mlir
   func @mm_fused(%arg0: memref<2048x2048xf32>, %arg1: memref<2048x2048xf32>, %arg2: memref<2048x2048xf32>) {
     %c0 = constant 0 : index
     %c0_0 = constant 0 : index
@@ -681,7 +681,7 @@ func @mm_fused(%arg0: memref<2048x2048xf32>, %arg1: memref<2048x2048xf32>, %arg2
         V
 ```
 
-```C++
+```mlir
   func @rise_fun(%arg0: memref<2048x2048xf32>, %arg1: memref<2048x2048xf32>, %arg2: memref<2048x2048xf32>) {
     %cst = constant 0.000000e+00 : f32
     %c0 = constant 0 : index
